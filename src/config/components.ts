@@ -14,6 +14,12 @@ import {
 } from '@/registry/new-york/animated-counter';
 
 import {
+  meta as animatedMenuMeta,
+  usageCode as animatedMenuUsage,
+  componentFiles as animatedMenuFiles,
+} from '@/registry/new-york/animated-menu';
+
+import {
   meta as holdButtonMeta,
   usageCode as holdButtonUsage,
   componentFiles as holdButtonFiles,
@@ -59,6 +65,12 @@ import {
 const AnimatedCounter = lazy(() =>
   import('@/registry/new-york/animated-counter').then((mod) => ({
     default: mod.AnimatedCounter,
+  }))
+);
+
+const AnimatedMenu = lazy(() =>
+  import('@/registry/new-york/animated-menu').then((mod) => ({
+    default: mod.AnimatedMenu,
   }))
 );
 
@@ -126,6 +138,12 @@ export const components: ComponentConfig[] = [
     AnimatedCounter,
     animatedCounterUsage,
     animatedCounterFiles
+  ),
+  buildComponentConfig(
+    animatedMenuMeta,
+    AnimatedMenu,
+    animatedMenuUsage,
+    animatedMenuFiles
   ),
   buildComponentConfig(
     holdButtonMeta,

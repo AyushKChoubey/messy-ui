@@ -31,10 +31,21 @@ export default async function PreviewPage({
     if (stringValue === 'true') props[key] = true;
     else if (stringValue === 'false') props[key] = false;
     else {
-      const num = parseFloat(stringValue);
-      if (!isNaN(num) && stringValue.trim() !== '') {
-        props[key] = num;
-      } else {
+      try {
+        if (
+          (stringValue.startsWith('[') && stringValue.endsWith(']')) ||
+          (stringValue.startsWith('{') && stringValue.endsWith('}'))
+        ) {
+          props[key] = JSON.parse(stringValue);
+        } else {
+          const num = parseFloat(stringValue);
+          if (!isNaN(num) && stringValue.trim() !== '') {
+            props[key] = num;
+          } else {
+            props[key] = stringValue;
+          }
+        }
+      } catch {
         props[key] = stringValue;
       }
     }

@@ -69,7 +69,9 @@ export default function InteractivePropsPlayground({
           )}
         </Button>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div
+        className={`grid ${configurableProps.length === 1 ? '' : 'grid-cols-2 md:grid-cols-3'} w-full h-full p-4`}
+      >
         {configurableProps.map((prop) => {
           const value =
             currentProps[prop.name] ??

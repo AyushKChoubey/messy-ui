@@ -6,7 +6,13 @@ export interface PropDefinition {
   default: string;
   description: string;
   /** Explicitly specify the control type to avoid dynamic switching */
-  control?: 'input' | 'slider' | 'switch' | 'select' | 'select-custom';
+  control?:
+    | 'input'
+    | 'slider'
+    | 'switch'
+    | 'select'
+    | 'select-custom'
+    | 'object-array';
   /** Options for select/select-custom controls */
   options?: string[] | number[];
   /** Min value for slider controls */

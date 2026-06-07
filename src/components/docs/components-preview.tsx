@@ -23,6 +23,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import DeviceFrame from './device-frame';
 import CodeBlock from './code-blocks';
 import InteractivePropsPlayground from './interactive-props-playground';
+import { parseDefaultValue } from './interactive-props-playground/utils';
 import { ComponentConfig } from '@/config/components';
 import { cn } from '@/lib/utils';
 
@@ -56,12 +57,8 @@ const ComponentPreview = ({ component, className }: ComponentPreviewProps) => {
   const defaultProps = useMemo(() => {
     const defaults: Record<string, unknown> = {};
     component.props.forEach((prop) => {
-      if (prop.type === 'boolean') {
-        defaults[prop.name] = prop.default === 'true';
-      } else if (prop.type === 'number') {
-        defaults[prop.name] = parseFloat(prop.default) || 0;
-      } else if (!prop.type.includes('=>')) {
-        defaults[prop.name] = prop.default.replace(/^["']|["']$/g, '');
+      if (!prop.type.includes('=>')) {
+        defaults[prop.name] = parseDefaultValue(prop.default, prop.type);
       }
     });
     return defaults;
@@ -191,19 +188,26 @@ const ComponentPreview = ({ component, className }: ComponentPreviewProps) => {
                   src={`/preview/${component.slug}?${new URLSearchParams(
                     Object.entries(mergedProps).reduce(
                       (acc, [key, value]) => {
-                        if (value !== undefined) acc[key] = String(value);
+                        if (value === undefined) return acc;
+
+                        if (Array.isArray(value) || typeof value === 'object') {
+                          acc[key] = JSON.stringify(value);
+                        } else {
+                          acc[key] = String(value);
+                        }
+
                         return acc;
                       },
                       {} as Record<string, string>
                     )
                   ).toString()}`}
-                  className="w-full h-[600px] border-none bg-background"
+                  className="w-full h-150 border-none bg-background"
                   title={`${component.name} preview`}
                 />
               </DeviceFrame>
             ) : (
               <DeviceFrame device={device}>
-                <div className="min-h-[200px] flex items-center justify-center">
+                <div className="min-h-50 flex items-center justify-center">
                   {PreviewContent}
                 </div>
               </DeviceFrame>

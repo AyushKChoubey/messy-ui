@@ -17,6 +17,31 @@
       ]
     },
     {
+      "name": "animated-menu",
+      "type": "registry:component",
+      "title": "Animated Menu",
+      "description": "A slide-out navigation menu with staggered link entrances, a curved accent panel, and motion-driven transitions.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "registry/new-york/animated-menu/animated-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/animated-menu/menu-box.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/animated-menu/link.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/animated-menu/curve.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "hold-button",
       "type": "registry:component",
       "title": "Hold Button",

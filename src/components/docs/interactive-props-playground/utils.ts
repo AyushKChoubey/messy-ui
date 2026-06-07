@@ -6,6 +6,13 @@ import { PropDefinition } from '@/config/components';
 export function parseDefaultValue(defaultStr: string, type: string): unknown {
   if (type === 'boolean') return defaultStr === 'true';
   if (type === 'number') return parseFloat(defaultStr) || 0;
+  if (type.includes('[]')) {
+    try {
+      return JSON.parse(defaultStr);
+    } catch {
+      return [];
+    }
+  }
   // Remove surrounding quotes for strings
   return defaultStr.replace(/^["']|["']$/g, '');
 }
@@ -13,9 +20,12 @@ export function parseDefaultValue(defaultStr: string, type: string): unknown {
 /**
  * Format a prop value for JSX output
  */
-export function formatPropValue(value: unknown, type: string): string {
-  if (type === 'boolean' || type === 'number') {
+export function formatPropValue(value: unknown, prop: PropDefinition): string {
+  if (prop.type === 'boolean' || prop.type === 'number') {
     return `{${value}}`;
+  }
+  if (prop.control === 'object-array' || prop.type.includes('[]')) {
+    return `{${JSON.stringify(value, null, 2)}}`;
   }
   return `"${value}"`;
 }
@@ -40,7 +50,7 @@ export function generateUsageCode(
     })
     .map((prop) => ({
       name: prop.name,
-      value: formatPropValue(currentProps[prop.name], prop.type),
+      value: formatPropValue(currentProps[prop.name], prop),
     }));
 
   if (propsToInclude.length === 0) {
