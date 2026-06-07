@@ -7,6 +7,7 @@ import { ComponentConfig, InstallationNote } from '@/config/types';
 import ComponentPreview from '@/components/docs/components-preview';
 import PropsTable from '@/components/docs/props-table';
 import InstallationSection from '@/components/docs/installation-section';
+import RichTextLinks from '@/components/docs/rich-text-links';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Info, AlertTriangle, Lightbulb } from 'lucide-react';
@@ -120,7 +121,7 @@ export default function AnimatedPageContent({
           </Badge>
         </div>
         <p className="text-lg text-muted-foreground max-w-3xl">
-          {component.description}
+          <RichTextLinks>{component.description}</RichTextLinks>
         </p>
         {/* SEO Keywords as tags */}
         <motion.div

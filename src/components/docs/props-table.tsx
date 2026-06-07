@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import RichTextLinks from './rich-text-links';
 import { PropDefinition } from '@/config/components';
 
 interface PropsTableProps {
@@ -47,7 +48,7 @@ const PropsTable = ({ props }: PropsTableProps) => {
                 </code>
               </TableCell>
               <TableCell className="text-sm text-foreground">
-                {prop.description}
+                <RichTextLinks>{prop.description}</RichTextLinks>
               </TableCell>
             </TableRow>
           ))}

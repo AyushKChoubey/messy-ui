@@ -45,7 +45,7 @@ const meta: ComponentMeta = {
   name: 'Animated Menu',
   category: 'Navigation',
   description:
-    'A slide-out navigation menu with staggered links, an animated curve accent, and motion-driven transitions. This component is inspired from Oliver larose tutorial and I built this in the library just for fun and learning purposes.',
+    'A slide-out navigation menu with staggered links, an animated curve accent, and motion-driven transitions. This component is inspired from [Oliver larose tutorial](https://blog.olivierlarose.com/tutorials/curved-menu) and I built this in the library just for fun and learning purposes.',
   seoTitle: 'Animated Menu - React Component | messy-ui',
   seoDescription:
     'A stylish animated navigation menu with slide-in panel motion, staggered link entrances, and a curved background accent for React and Next.js apps.',

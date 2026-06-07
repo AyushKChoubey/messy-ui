@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { InteractivePropsPlaygroundProps } from './types';
 import { parseDefaultValue, generateUsageCode } from './utils';
 import { PropControl } from './controls';
+import RichTextLinks from '../rich-text-links';
 
 export default function InteractivePropsPlayground({
   props,
@@ -80,7 +81,7 @@ export default function InteractivePropsPlayground({
             <div key={prop.name} className="space-y-1">
               <PropControl prop={prop} value={value} onChange={handleChange} />
               <p className="text-xs text-muted-foreground">
-                {prop.description}
+                <RichTextLinks>{prop.description}</RichTextLinks>
               </p>
             </div>
           );
