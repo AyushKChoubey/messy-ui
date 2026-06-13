@@ -48,7 +48,6 @@ const cliRunners = [
   { id: 'bun', label: 'bun' },
 ];
 
-// Note styling based on type
 const InstallationSection = ({
   component,
   className,
@@ -56,10 +55,8 @@ const InstallationSection = ({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [language, setLanguage] = useState<'ts' | 'js'>('ts');
 
-  // Parse component code - can be string or ComponentFile[] (ComponentFileRef[] is resolved server-side)
   const files = useMemo((): ComponentFile[] => {
     if (typeof component.componentCode === 'string') {
-      // Legacy single string format
       return [
         {
           filename: `${component.slug}.tsx`,
@@ -68,22 +65,16 @@ const InstallationSection = ({
         },
       ];
     }
-    // ComponentFileRef[] should be resolved to ComponentFile[] by server component
-    // Check if it's already resolved (has 'code' property)
     if (
       component.componentCode.length > 0 &&
       'code' in component.componentCode[0]
     ) {
       return component.componentCode as ComponentFile[];
     }
-    // Fallback: ComponentFileRef[] not resolved (shouldn't happen in production)
     return [];
   }, [component.componentCode, component.slug]);
 
-  // Check if any file has JS version
-  const hasJsVersion = useMemo(() => {
-    return files.some((f) => f.jsCode);
-  }, [files]);
+  const hasJsVersion = useMemo(() => files.some((f) => f.jsCode), [files]);
 
   const handleCopy = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
@@ -91,7 +82,6 @@ const InstallationSection = ({
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  // Calculate step numbers dynamically based on what's present
   const hasCLIDeps =
     component.cliDependencies && component.cliDependencies.length > 0;
   const hasNpmDeps =
@@ -103,7 +93,7 @@ const InstallationSection = ({
   return (
     <div className={cn('space-y-4', className)}>
       <Tabs defaultValue="cli" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 max-w-[300px]">
+        <TabsList className="grid w-full grid-cols-2 max-w-75">
           <TabsTrigger value="cli" className="gap-2">
             <Terminal className="w-4 h-4" />
             CLI
@@ -115,14 +105,13 @@ const InstallationSection = ({
           <TabsIndicator />
         </TabsList>
 
-        {/* CLI Installation Tab */}
         <TabsContent value="cli" className="mt-4 space-y-3">
           <p className="text-sm text-muted-foreground">
             Use the shadcn CLI to install this component:
           </p>
-          <div className="rounded-lg border border-border overflow-hidden">
+          <div className="border border-border overflow-hidden">
             <Tabs defaultValue="npx" className="w-full">
-              <div className="bg-muted/50 border-b border-border px-2">
+              <div className="bg-muted/50 border-b border-border ">
                 <TabsList className="h-10 bg-transparent">
                   {cliRunners.map((runner) => (
                     <TabsTrigger
@@ -163,9 +152,7 @@ const InstallationSection = ({
           </div>
         </TabsContent>
 
-        {/* Manual Installation Tab */}
         <TabsContent value="manual" className="mt-4 space-y-6">
-          {/* Step: CLI Dependencies (if any) */}
           {hasCLIDeps && (
             <div className="space-y-3">
               <div className="flex items-center gap-2">
@@ -182,7 +169,7 @@ const InstallationSection = ({
                     <p className="text-sm text-muted-foreground pl-8">
                       {dep.label}
                     </p>
-                    <div className="rounded-lg border border-border overflow-hidden">
+                    <div className="border border-border overflow-hidden">
                       <Tabs defaultValue="npx" className="w-full">
                         <div className="bg-muted/50 border-b border-border px-2">
                           <TabsList className="h-10 bg-transparent">
@@ -234,18 +221,17 @@ const InstallationSection = ({
             </div>
           )}
 
-          {/* Step: Install NPM Dependencies */}
           {hasNpmDeps && (
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                <span className="flex items-center justify-center w-6 h-6 bg-primary rounded-full text-primary-foreground text-xs font-medium">
                   {++stepNumber}
                 </span>
                 <h4 className="font-medium text-foreground">
                   Install dependencies
                 </h4>
               </div>
-              <div className="rounded-lg border border-border overflow-hidden">
+              <div className="border border-border overflow-hidden">
                 <Tabs defaultValue="npm" className="w-full">
                   <div className="bg-muted/50 border-b border-border px-2">
                     <TabsList className="h-10 bg-transparent">
@@ -280,11 +266,10 @@ const InstallationSection = ({
             </div>
           )}
 
-          {/* Step: Copy Component Files */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                <span className="flex items-center justify-center w-6 h-6 bg-primary rounded-full text-primary-foreground text-xs font-medium">
                   {++stepNumber}
                 </span>
                 <h4 className="font-medium text-foreground">
@@ -292,9 +277,8 @@ const InstallationSection = ({
                 </h4>
               </div>
 
-              {/* Language Toggle */}
               {hasJsVersion && (
-                <div className="flex items-center border border-border rounded-lg overflow-hidden">
+                <div className="flex items-center border border-border overflow-hidden">
                   <button
                     onClick={() => setLanguage('ts')}
                     className={cn(
@@ -325,7 +309,6 @@ const InstallationSection = ({
               Copy and paste the following code into your project:
             </p>
 
-            {/* Single file or Multiple files with tabs */}
             {files.length === 1 ? (
               <div className="space-y-2">
                 <p className="text-xs text-muted-foreground font-mono pl-1">
@@ -344,7 +327,7 @@ const InstallationSection = ({
               </div>
             ) : (
               <Tabs defaultValue={files[0].filename} className="w-full">
-                <div className="rounded-lg border border-border overflow-hidden">
+                <div className="border border-border overflow-hidden">
                   <div className="bg-muted/50 border-b border-border px-2">
                     <TabsList className="h-10 bg-transparent">
                       {files.map((file) => (
@@ -389,12 +372,11 @@ const InstallationSection = ({
             )}
           </div>
 
-          {/* Step: Additional Code Snippets (CSS, config, etc.) */}
           {hasSnippets &&
             component.snippets!.map((snippet, index) => (
               <div key={index} className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                  <span className="flex items-center justify-center w-6 h-6 bg-primary text-primary-foreground text-xs font-medium">
                     {++stepNumber}
                   </span>
                   <h4 className="font-medium text-foreground">

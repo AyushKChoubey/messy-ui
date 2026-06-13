@@ -82,12 +82,7 @@ const ComponentPreview = ({ component, className }: ComponentPreviewProps) => {
   );
 
   return (
-    <div
-      className={cn(
-        'rounded-xl border border-border overflow-hidden bg-card',
-        className
-      )}
-    >
+    <div className={cn('border border-border bg-card', className)}>
       <Tabs defaultValue="preview" className="w-full">
         {/* Toolbar */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/30">
@@ -109,7 +104,7 @@ const ComponentPreview = ({ component, className }: ComponentPreviewProps) => {
 
           <div className="flex items-center gap-1">
             {/* Device Switcher */}
-            <div className="flex items-center border border-border rounded-lg p-0.5 bg-background mr-2">
+            <div className="flex items-center border border-border p-0.5 bg-background mr-2">
               {(Object.keys(deviceIcons) as DeviceType[]).map((d) => {
                 const Icon = deviceIcons[d];
                 return (

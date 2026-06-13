@@ -53,10 +53,7 @@ const CodeBlock = ({
 
   return (
     <div
-      className={cn(
-        'relative rounded-lg overflow-hidden border border-border',
-        className
-      )}
+      className={cn('relative overflow-hidden border border-border', className)}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-muted/50 border-b border-border">

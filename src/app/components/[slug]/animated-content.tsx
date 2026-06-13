@@ -78,152 +78,177 @@ export default function AnimatedPageContent({
   relatedComponents,
 }: AnimatedPageContentProps) {
   return (
-    <motion.div
-      className="space-y-8"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
+    <div
+      className="border bg-background"
+      style={{
+        backgroundImage: `
+    linear-gradient(
+      45deg,
+      transparent 49%,
+      var(--border) 49%,
+      var(--border) 51%,
+      transparent 51%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 49%,
+      var(--border) 49%,
+      var(--border) 51%,
+      transparent 51%
+    )
+  `,
+        backgroundSize: '40px 40px',
+      }}
     >
-      <ProgressBar className="bg-foreground" origin="left" height={1.5} />
-      {/* Breadcrumb */}
       <motion.div
-        variants={itemVariants}
-        className="flex items-center gap-2 text-sm text-muted-foreground"
+        className="space-y-8 border px-4 py-6 lg:px-8 m-4 bg-background"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <Link
-          href="/components"
-          className="hover:text-foreground transition-colors"
-        >
-          Components
-        </Link>
-        <span>/</span>
-        <Link
-          href={`/components?category=${component.category}`}
-          className="hover:text-foreground transition-colors"
-        >
-          {component.category}
-        </Link>
-        <span>/</span>
-        <span className="text-foreground">{component.name}</span>
-      </motion.div>
-
-      {/* Header */}
-      <motion.div variants={itemVariants} className="space-y-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-3xl font-bold text-foreground">
-            {component.name}
-          </h1>
-          <Badge variant="outline">{component.category}</Badge>
-          <Badge
-            variant={component.sandbox === 'iframe' ? 'default' : 'secondary'}
-          >
-            {component.sandbox} sandbox
-          </Badge>
-        </div>
-        <p className="text-lg text-muted-foreground max-w-3xl">
-          <RichTextLinks>{component.description}</RichTextLinks>
-        </p>
-        {/* SEO Keywords as tags */}
+        <ProgressBar className="bg-foreground" origin="left" height={1.5} />
+        {/* Breadcrumb */}
         <motion.div
-          className="flex flex-wrap gap-1.5"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          variants={itemVariants}
+          className="flex items-center gap-2 text-sm text-muted-foreground"
         >
-          {component.keywords.slice(0, 5).map((keyword, index) => (
-            <motion.div
-              key={keyword}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
-            >
-              <Badge variant="outline" className="text-xs">
-                {keyword}
-              </Badge>
-            </motion.div>
-          ))}
+          <Link
+            href="/components"
+            className="hover:text-foreground transition-colors"
+          >
+            Components
+          </Link>
+          <span>/</span>
+          <Link
+            href={`/components?category=${component.category}`}
+            className="hover:text-foreground transition-colors"
+          >
+            {component.category}
+          </Link>
+          <span>/</span>
+          <span className="text-foreground">{component.name}</span>
         </motion.div>
-      </motion.div>
 
-      {/* Preview */}
-      <motion.section variants={sectionVariants}>
-        <h2 className="text-xl font-semibold text-foreground mb-4">Preview</h2>
-        <ComponentPreview component={component} />
-      </motion.section>
-
-      {/* Installation Notes - shown above tabs */}
-      {component.notes && component.notes.length > 0 && (
-        <div className="space-y-2">
-          {component.notes.map((note, index) => {
-            const style = noteStyles[note.type];
-            const Icon = style.icon;
-            return (
-              <div
-                key={index}
-                className={cn(
-                  'flex items-start gap-3 p-3 rounded-lg border',
-                  style.className
-                )}
+        {/* Header */}
+        <motion.div variants={itemVariants} className="space-y-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-3xl font-bold text-foreground">
+              {component.name}
+            </h1>
+            <Badge variant="outline">{component.category}</Badge>
+            <Badge
+              variant={component.sandbox === 'iframe' ? 'default' : 'secondary'}
+            >
+              {component.sandbox} sandbox
+            </Badge>
+          </div>
+          <p className="text-lg text-muted-foreground max-w-3xl">
+            <RichTextLinks>{component.description}</RichTextLinks>
+          </p>
+          {/* SEO Keywords as tags */}
+          <motion.div
+            className="flex flex-wrap gap-1.5"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {component.keywords.slice(0, 5).map((keyword, index) => (
+              <motion.div
+                key={keyword}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
               >
-                <Icon className="w-4 h-4 mt-0.5 shrink-0" />
-                <p className="text-sm">{note.message}</p>
-              </div>
-            );
-          })}
-        </div>
-      )}
+                <Badge variant="outline" className="text-xs">
+                  {keyword}
+                </Badge>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
 
-      <Separator />
+        {/* Preview */}
+        <motion.section variants={sectionVariants}>
+          <h2 className="text-xl font-semibold text-foreground mb-4">
+            Preview
+          </h2>
+          <ComponentPreview component={component} />
+        </motion.section>
 
-      {/* Installation */}
-      <motion.section variants={sectionVariants}>
-        <h2 className="text-xl font-semibold text-foreground mb-4">
-          Installation
-        </h2>
-        <InstallationSection component={component} />
-      </motion.section>
-
-      <Separator />
-
-      {/* Props */}
-      <motion.section variants={sectionVariants}>
-        <h2 className="text-xl font-semibold text-foreground mb-4">Props</h2>
-        <PropsTable props={component.props} />
-      </motion.section>
-
-      {/* Related Components */}
-      {relatedComponents.length > 0 && (
-        <>
-          <Separator />
-          <motion.section variants={sectionVariants}>
-            <h2 className="text-xl font-semibold text-foreground mb-4">
-              Related Components
-            </h2>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {relatedComponents.map((related, index) => (
-                <motion.div
-                  key={related.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+        {/* Installation Notes - shown above tabs */}
+        {component.notes && component.notes.length > 0 && (
+          <div className="space-y-2">
+            {component.notes.map((note, index) => {
+              const style = noteStyles[note.type];
+              const Icon = style.icon;
+              return (
+                <div
+                  key={index}
+                  className={cn(
+                    'flex items-start gap-3 p-3 border',
+                    style.className
+                  )}
                 >
-                  <Link
-                    href={`/components/${related.slug}`}
-                    className="flex items-center justify-between p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-muted/50 transition-all group"
+                  <Icon className="w-4 h-4 mt-0.5 shrink-0" />
+                  <p className="text-sm">{note.message}</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <Separator />
+
+        {/* Installation */}
+        <motion.section variants={sectionVariants}>
+          <h2 className="text-xl font-semibold text-foreground mb-4">
+            Installation
+          </h2>
+          <InstallationSection component={component} />
+        </motion.section>
+
+        <Separator />
+
+        {/* Props */}
+        <motion.section variants={sectionVariants}>
+          <h2 className="text-xl font-semibold text-foreground mb-4">Props</h2>
+          <PropsTable props={component.props} />
+        </motion.section>
+
+        {/* Related Components */}
+        {relatedComponents.length > 0 && (
+          <>
+            <Separator />
+            <motion.section variants={sectionVariants}>
+              <h2 className="text-xl font-semibold text-foreground mb-4">
+                Related Components
+              </h2>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {relatedComponents.map((related, index) => (
+                  <motion.div
+                    key={related.slug}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <span className="font-medium text-foreground group-hover:text-primary transition-colors">
-                      {related.name}
-                    </span>
-                    <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </motion.section>
-        </>
-      )}
-    </motion.div>
+                    <Link
+                      href={`/components/${related.slug}`}
+                      className="flex items-center justify-between p-4 border border-border hover:border-primary/50 hover:bg-muted/50 transition-all group"
+                    >
+                      <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                        {related.name}
+                      </span>
+                      <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
+          </>
+        )}
+      </motion.div>
+    </div>
   );
 }

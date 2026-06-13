@@ -95,7 +95,7 @@ const DeviceFrame = ({
   if (device === 'desktop') {
     return (
       <div className={cn('w-full', className)}>
-        <div className="rounded-lg border border-border bg-card overflow-hidden">
+        <div className="border border-border bg-card overflow-hidden">
           {children}
         </div>
       </div>
@@ -112,12 +112,12 @@ const DeviceFrame = ({
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
         {/* Device Frame */}
-        <div className="rounded-lg border-2 border-border bg-card shadow-lg overflow-hidden">
+        <div className="border-2 border-border bg-card shadow-lg overflow-hidden">
           {/* Device chrome */}
           <div className="h-6 bg-muted flex items-center justify-center gap-1.5 border-b border-border">
-            <div className="w-2 h-2 rounded-full bg-red-400" />
-            <div className="w-2 h-2 rounded-full bg-yellow-400" />
-            <div className="w-2 h-2 rounded-full bg-green-400" />
+            <div className="w-2 h-2 bg-red-400" />
+            <div className="w-2 h-2 bg-yellow-400" />
+            <div className="w-2 h-2 bg-green-400" />
             {currentWidth && (
               <span className="absolute right-3 text-[10px] text-muted-foreground font-mono">
                 {Math.round(currentWidth)}px
@@ -135,7 +135,7 @@ const DeviceFrame = ({
               onMouseDown={handleMouseDown}
               className={cn(
                 'absolute top-1/2 -right-3 -translate-y-1/2 z-10',
-                'w-4 h-12 rounded-full',
+                'w-4 h-12',
                 'bg-border hover:bg-primary/50 transition-colors',
                 'flex items-center justify-center cursor-ew-resize',
                 'group',
@@ -155,7 +155,7 @@ const DeviceFrame = ({
               onMouseDown={handleMouseDown}
               className={cn(
                 'absolute top-1/2 -left-3 -translate-y-1/2 z-10',
-                'w-4 h-12 rounded-full',
+                'w-4 h-12',
                 'bg-border hover:bg-primary/50 transition-colors',
                 'flex items-center justify-center cursor-ew-resize',
                 'group',

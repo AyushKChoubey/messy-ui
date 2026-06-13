@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google';
 import './globals.css';
+import 'dialkit/styles.css';
 import { ThemeProvider } from '@/components/layout/theme-provider';
 import DocsLayout from '@/components/layout/docs-layout';
 import { Analytics } from '@vercel/analytics/next';

@@ -20,7 +20,7 @@ import { CustomSelectControl } from './custom-select-control';
 export function BooleanControl({ prop, value, onChange }: ControlProps) {
   return (
     <div className="flex items-center justify-between">
-      <Label htmlFor={prop.name} className="text-sm font-medium">
+      <Label htmlFor={prop.name} className="text-sm font-medium uppercase">
         {prop.name}
       </Label>
       <Switch
@@ -40,7 +40,7 @@ export function NumberControl({ prop, value, onChange }: ControlProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <Label htmlFor={prop.name} className="text-sm font-medium">
+        <Label htmlFor={prop.name} className="text-sm font-medium uppercase">
           {prop.name}
         </Label>
         <span className="text-sm text-muted-foreground">{numValue}</span>
@@ -73,7 +73,7 @@ export function EnumControl({ prop, value, onChange }: ControlProps) {
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={prop.name} className="text-sm font-medium">
+      <Label htmlFor={prop.name} className="text-sm font-medium uppercase">
         {prop.name}
       </Label>
       <Select
@@ -98,7 +98,7 @@ export function EnumControl({ prop, value, onChange }: ControlProps) {
 export function StringControl({ prop, value, onChange }: ControlProps) {
   return (
     <div className="space-y-2">
-      <Label htmlFor={prop.name} className="text-sm font-medium">
+      <Label htmlFor={prop.name} className="text-sm font-medium uppercase">
         {prop.name}
       </Label>
       <Input
@@ -116,7 +116,7 @@ export function SelectControl({ prop, value, onChange }: ControlProps) {
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={prop.name} className="text-sm font-medium">
+      <Label htmlFor={prop.name} className="text-sm font-medium uppercase">
         {prop.name}
       </Label>
       <Select
@@ -162,17 +162,17 @@ export function ObjectArrayControl({ prop, value, onChange }: ControlProps) {
   };
 
   return (
-    <div className="space-y-3 w-full h-full">
+    <div className="space-y-3 w-full">
       <div className="flex items-center justify-between">
-        <Label className="text-sm font-medium">{prop.name}</Label>
+        <Label className="text-sm font-medium uppercase">{prop.name}</Label>
         <Button type="button" variant="outline" size="sm" onClick={addItem}>
           <Plus className="h-3.5 w-3.5" />
           Add item
         </Button>
       </div>
-      <div className="space-x-3 grid grid-cols-2 md:grid-cols-3 w-full h-full ">
+      <div className="flex flex-col w-full h-full ">
         {items.map((item, index) => (
-          <div key={index} className="space-y-2 rounded-md border p-3">
+          <div key={index} className="space-y-2 border p-3">
             <div className="flex items-center justify-between gap-2">
               <span className="text-xs font-medium text-muted-foreground">
                 Item {index + 1}
@@ -182,7 +182,7 @@ export function ObjectArrayControl({ prop, value, onChange }: ControlProps) {
                 variant="ghost"
                 size="sm"
                 onClick={() => removeItem(index)}
-                className="h-7 px-2 text-muted-foreground"
+                className="h-7 px-2 text-muted-foreground hover:bg-rose-600!"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
@@ -206,7 +206,7 @@ export function ObjectArrayControl({ prop, value, onChange }: ControlProps) {
           </div>
         ))}
         {items.length === 0 && (
-          <div className="rounded-md border border-dashed p-3 text-xs text-muted-foreground">
+          <div className="border border-dashed p-3 text-xs text-muted-foreground">
             No items yet. Add one to configure the menu.
           </div>
         )}

@@ -52,10 +52,6 @@ function ComponentsContent() {
     <div className="min-h-screen pb-20">
       {/* Hero Section */}
       <section className="relative py-16 px-6 overflow-hidden">
-        {/* Gradient background orbs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl -z-10" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-linear-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl -z-10" />
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -110,7 +106,7 @@ function ComponentsContent() {
               <Link key={category} href={`/components?category=${category}`}>
                 <Badge
                   variant="outline"
-                  className="px-4 py-2 text-sm cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="px-4 py-2 text-[1rem] cursor-pointer bg-card/80 hover:bg-primary hover:text-primary-foreground transition-colors"
                 >
                   {category}
                 </Badge>
@@ -178,7 +174,7 @@ function ComponentCard({ component }: ComponentCardProps) {
   return (
     <motion.div variants={cardVariants}>
       <Link href={`/components/${component.slug}`} className="block group">
-        <div className="relative rounded-xl border border-border bg-card overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+        <div className="relative border border-border bg-card overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
           {/* Preview Area */}
           <div className="relative h-48 bg-linear-to-br from-muted/30 via-background to-muted/50 p-6 flex items-center justify-center overflow-hidden">
             {/* Dot pattern background */}

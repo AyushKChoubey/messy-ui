@@ -71,14 +71,18 @@ export default function InteractivePropsPlayground({
         </Button>
       </div>
       <div
-        className={`grid ${configurableProps.length === 1 ? '' : 'grid-cols-2 md:grid-cols-3'} w-full h-full p-4`}
+        className={`flex flex-row flex-wrap justify-between w-full h-full p-4 gap-4`}
       >
         {configurableProps.map((prop) => {
           const value =
             currentProps[prop.name] ??
             parseDefaultValue(prop.default, prop.type);
+          const isObjectArray = prop.control === 'object-array';
           return (
-            <div key={prop.name} className="space-y-1">
+            <div
+              key={prop.name}
+              className={`space-y-1 ${isObjectArray ? 'w-full' : 'w-[calc(50%-0.5rem)] min-w-45'}`}
+            >
               <PropControl prop={prop} value={value} onChange={handleChange} />
               <p className="text-xs text-muted-foreground">
                 <RichTextLinks>{prop.description}</RichTextLinks>
